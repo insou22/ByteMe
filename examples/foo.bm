@@ -1,0 +1,10 @@
+const2 const2
+sum
+store0
+load0
+print 1
+
+load0
+const1
+sub
+print 1
