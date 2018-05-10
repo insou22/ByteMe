@@ -67,30 +67,23 @@ public class DefaultByteMeVM implements ByteMeVM {
                 if (ldcBuffer.length() > 0) {
                     ldcBuffer.append(" ");
                 }
-                System.out.println("LDC loaded");
                 if (ldcOpen) {
-                    System.out.println("Open");
                     if (this.fillLdc(code, ldcBuffer)) {
-                        System.out.println("Filled");
                         this.completeLdc(ldcBuffer.toString(), rawCode);
                         ldc = false;
                         ldcOpen = false;
                     }
                 } else {
-                    System.out.println("Closed");
                     int c = 0;
                     for (; c < code.length(); c++) {
                         if ((code.charAt(c)) == '\"') {
-                            System.out.println("Now Open");
                             ldcOpen = true;
                             break;
                         }
                     }
 
                     if (ldcOpen) {
-                        System.out.println("Attempting fill");
                         if (this.fillLdc(code.substring(c + 1), ldcBuffer)) {
-                            System.out.println("Filled");
                             this.completeLdc(ldcBuffer.toString(), rawCode);
                             ldc = false;
                             ldcOpen = false;
@@ -107,7 +100,6 @@ public class DefaultByteMeVM implements ByteMeVM {
             }
 
             if (code.equalsIgnoreCase("ldc")) {
-                System.out.println("ldc");
                 ldc = true;
                 ldcBuffer = new StringBuilder();
                 continue;
@@ -142,23 +134,11 @@ public class DefaultByteMeVM implements ByteMeVM {
     }
 
     private boolean fillLdc(String code, StringBuilder builder) {
-        boolean literalNext = false;
         for (char c : code.toCharArray()) {
-            if (literalNext) {
-                builder.append(c);
-                System.out.println("Appended literal " + c);
-                literalNext = false;
-                continue;
-            }
-            if (c == '\\') {
-                literalNext = true;
-                continue;
-            }
             if (c == '\"') {
                 return true;
             }
             builder.append(c);
-            System.out.println("Appended natural " + c);
         }
         return false;
     }
