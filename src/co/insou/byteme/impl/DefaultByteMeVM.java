@@ -48,11 +48,12 @@ public class DefaultByteMeVM implements ByteMeVM {
             }
         }
 
-        String[] codes = joiner.toString().split("[\\n\\r\\s]+");
+        String[] codes = joiner.toString().split("[\\n\\r\\s]+(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
         int ignore = 0;
         boolean ldc = false;
         boolean ldcOpen = false;
+        boolean ldcStack = false;
         StringBuilder ldcBuffer = null;
 
         for (int i = 0; i < codes.length; i++)
@@ -69,9 +70,10 @@ public class DefaultByteMeVM implements ByteMeVM {
                 }
                 if (ldcOpen) {
                     if (this.fillLdc(code, ldcBuffer)) {
-                        this.completeLdc(ldcBuffer.toString(), rawCode);
+                        this.completeLdc(ldcBuffer.toString(), rawCode, ldcStack);
                         ldc = false;
                         ldcOpen = false;
+                        ldcStack = false;
                     }
                 } else {
                     int c = 0;
@@ -84,9 +86,10 @@ public class DefaultByteMeVM implements ByteMeVM {
 
                     if (ldcOpen) {
                         if (this.fillLdc(code.substring(c + 1), ldcBuffer)) {
-                            this.completeLdc(ldcBuffer.toString(), rawCode);
+                            this.completeLdc(ldcBuffer.toString(), rawCode, ldcStack);
                             ldc = false;
                             ldcOpen = false;
+                            ldcStack = false;
                         }
                     }
                 }
@@ -101,6 +104,11 @@ public class DefaultByteMeVM implements ByteMeVM {
 
             if (code.equalsIgnoreCase("ldc")) {
                 ldc = true;
+                ldcBuffer = new StringBuilder();
+                continue;
+            } else if (code.equalsIgnoreCase("ldcs")) {
+                ldc = true;
+                ldcStack = true;
                 ldcBuffer = new StringBuilder();
                 continue;
             }
@@ -143,11 +151,13 @@ public class DefaultByteMeVM implements ByteMeVM {
         return false;
     }
 
-    private void completeLdc(String lcd, List<Integer> code) {
+    private void completeLdc(String lcd, List<Integer> code, boolean stack) {
         for (int index = lcd.length() - 1; index >= 0; index--) {
             code.add(Instructions.CONST.getOpcode());
             code.add((int) lcd.charAt(index));
         }
+        code.add(Instructions.CONST.getOpcode());
+        code.add(lcd.length());
     }
 
     @Override

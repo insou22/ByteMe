@@ -1,27 +1,29 @@
+;======================================================
+
 const0 store0   ; 0-1 INITIALISE F(n-1) = 0 IN [0]
 const1 store1   ; 2-3 INITIALISE F(n) = 1   IN [1]
-const2 store3   ; 4-5 INITIALISE COUNT = 2  IN [2]
 
-load1     ; 6
-store2    ; 7 STORE F(n) IN [2]
+load1     ; 4
+store2    ; 5 STORE F(n) IN [2]
 
-load0     ; 8
-print 1   ; 9-10 PRINT F(n-1)
-load0     ; 11
-load1     ; 12 LOAD F(n-1), F(n) TO COMPUTE F(n+1)
-sum       ; 13 SUM F(n-1) + F(n)
-store1    ; 14 STORE F(n+1)
-load2     ; 15
-store0    ; 16 SET F(n) to F(n-1)
-load3     ; 17
-incr      ; 18
-store3    ; 19 INCREMENT COUNTER
-load3     ; 20
-const 49  ; 21-22
-equal not ; 23-24 COUNTER == 14
-gotoif 6  ; 25-26 GOTO IF CONTINUING
+load0     ; 6
+print 1   ; 7-8 PRINT F(n-1)
+load0     ; 9
+load1     ; 10 LOAD F(n-1), F(n) TO COMPUTE F(n+1)
+sum       ; 11 SUM F(n-1) + F(n)
+store1    ; 12 STORE F(n+1)
+load2     ; 13
+store0    ; 14 SET F(n) to F(n-1)
+load1     ; 15
+load0     ; 16 PREVENT OVERFLOW
+cmpge     ; 17
+gotoif 4  ; 18-19 GOTO IF NOT OVERFLOWED
+load0     ; 20
+print 1   ; 21
 
-          ; 27 Bytes
+          ; 22 Bytes
 
-ldc "Hello, World!"
-printa 13
+ldcs "== 32bit Fibonacci Sequence ==" ; LOAD CONSTANT, PUSH LEN TO STACK (s)
+printas                               ; PRINT ASCII (a) WITH STACK LEN (s)
+
+;======================================================
