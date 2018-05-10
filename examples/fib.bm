@@ -16,7 +16,7 @@ store0    ; 13 SET F(n) to F(n-1)
 load1     ; 14
 load0     ; 15 PREVENT OVERFLOW
 cmpge     ; 16
-gotoif 6  ; 17-18 GOTO IF NOT OVERFLOWED
+gotoif 5  ; 17-18 GOTO IF NOT OVERFLOWED
 
           ; 19 Bytes
 
