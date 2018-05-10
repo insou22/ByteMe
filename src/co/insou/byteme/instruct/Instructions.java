@@ -44,7 +44,12 @@ public enum Instructions {
     NOT(33, new Not_33()),
     PRINTA(34, new PrintA_2b_34()),
     PRINTAS(35, new PrintAS_35()),
-    PRINT1(36, new Print1_36());
+    PRINT1(36, new Print1_36()),
+    STORES0(37, new StoreS0_37()),
+    STORES1(38, new StoreS1_38()),
+    STORES2(39, new StoreS2_39()),
+    STORES3(40, new StoreS3_40()),
+    STORES(41, new StoreS_41());
 
     public static final int INVALID = -1;
 

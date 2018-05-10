@@ -1,26 +1,24 @@
 ;======================================================
 
-const0 store0   ; 0-1 INITIALISE F(n-1) = 0 IN [0]
-const1 store1   ; 2-3 INITIALISE F(n) = 1   IN [1]
-load0 print1    ; 4-5 PRINT INITIAL NUMBER
+const0 stores0 print1   ; 0-2 INITIALISE F(n-1) = 0 IN [0] ; PRINT INITIAL NUMBER
+const1 store1           ; 3-4 INITIALISE F(n) = 1   IN [1]
 
-load1     ; 6
-store2    ; 7 STORE F(n) IN [2]
+load1     ; 5
+stores2   ; 6 STORE F(n) IN [2]
+print1    ; 7 PRINT F(n-1)
 
-load1     ; 8
-print1    ; 9 PRINT F(n-1)
-load0     ; 10
-load1     ; 11 LOAD F(n-1), F(n) TO COMPUTE F(n+1)
-sum       ; 12 SUM F(n-1) + F(n)
-store1    ; 13 STORE F(n+1)
-load2     ; 14
-store0    ; 15 SET F(n) to F(n-1)
-load1     ; 16
-load0     ; 17 PREVENT OVERFLOW
-cmpge     ; 18
-gotoif 6  ; 19-20 GOTO IF NOT OVERFLOWED
+load0     ; 8
+load1     ; 9 LOAD F(n-1), F(n) TO COMPUTE F(n+1)
+sum       ; 10 SUM F(n-1) + F(n)
+store1    ; 11 STORE F(n+1)
+load2     ; 12
+store0    ; 13 SET F(n) to F(n-1)
+load1     ; 14
+load0     ; 15 PREVENT OVERFLOW
+cmpge     ; 16
+gotoif 6  ; 17-18 GOTO IF NOT OVERFLOWED
 
-          ; 21 Bytes
+          ; 19 Bytes
 
 ldcs "== 32bit Fibonacci Sequence ==" ; LOAD CONSTANT, PUSH LEN TO STACK (s)
 printas                               ; PRINT ASCII (a) WITH STACK LEN (s)
