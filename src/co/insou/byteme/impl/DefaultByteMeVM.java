@@ -32,18 +32,14 @@ public class DefaultByteMeVM implements ByteMeVM {
         {
             String line = program.get(i);
 
-            if (Strings.isBlank(line) || DefaultByteMeVM.COMMENT_START.matcher(line).matches())
-            {
+            if (Strings.isBlank(line) || DefaultByteMeVM.COMMENT_START.matcher(line).matches()) {
                 continue;
             }
 
-            if (line.contains(";"))
-            {
+            if (line.contains(";")) {
                 String newValue = DefaultByteMeVM.NO_COMMENT.split(line)[0].trim();
                 joiner.add(newValue);
-            }
-            else
-            {
+            } else {
                 joiner.add(line.trim());
             }
         }
@@ -58,74 +54,79 @@ public class DefaultByteMeVM implements ByteMeVM {
 
         for (int i = 0; i < codes.length; i++)
         {
-            String code = codes[i].trim();
+            try {
+                String code = codes[i].trim();
 
-            if (Strings.isBlank(code)) {
-                continue;
-            }
-
-            if (ldc) {
-                if (ldcBuffer.length() > 0) {
-                    ldcBuffer.append(" ");
+                if (Strings.isBlank(code)) {
+                    continue;
                 }
-                if (ldcOpen) {
-                    if (this.fillLdc(code, ldcBuffer)) {
-                        this.completeLdc(ldcBuffer.toString(), rawCode, ldcStack);
-                        ldc = false;
-                        ldcOpen = false;
-                        ldcStack = false;
-                    }
-                } else {
-                    int c = 0;
-                    for (; c < code.length(); c++) {
-                        if ((code.charAt(c)) == '\"') {
-                            ldcOpen = true;
-                            break;
-                        }
-                    }
 
+                if (ldc) {
+                    if (ldcBuffer.length() > 0) {
+                        ldcBuffer.append(" ");
+                    }
                     if (ldcOpen) {
-                        if (this.fillLdc(code.substring(c + 1), ldcBuffer)) {
+                        if (this.fillLdc(code, ldcBuffer)) {
                             this.completeLdc(ldcBuffer.toString(), rawCode, ldcStack);
                             ldc = false;
                             ldcOpen = false;
                             ldcStack = false;
                         }
+                    } else {
+                        int c = 0;
+                        for (; c < code.length(); c++) {
+                            if ((code.charAt(c)) == '\"') {
+                                ldcOpen = true;
+                                break;
+                            }
+                        }
+
+                        if (ldcOpen) {
+                            if (this.fillLdc(code.substring(c + 1), ldcBuffer)) {
+                                this.completeLdc(ldcBuffer.toString(), rawCode, ldcStack);
+                                ldc = false;
+                                ldcOpen = false;
+                                ldcStack = false;
+                            }
+                        }
                     }
+                    continue;
                 }
-                continue;
-            }
 
-            if (ignore > 0) {
-                rawCode.add(Integer.parseInt(code));
-                ignore--;
-                continue;
-            }
+                if (ignore > 0) {
+                    rawCode.add(Integer.parseInt(code));
+                    ignore--;
+                    continue;
+                }
 
-            if (code.equalsIgnoreCase("ldc")) {
-                ldc = true;
-                ldcBuffer = new StringBuilder();
-                continue;
-            } else if (code.equalsIgnoreCase("ldcs")) {
-                ldc = true;
-                ldcStack = true;
-                ldcBuffer = new StringBuilder();
-                continue;
-            }
+                if (code.equalsIgnoreCase("ldc")) {
+                    ldc = true;
+                    ldcBuffer = new StringBuilder();
+                    continue;
+                } else if (code.equalsIgnoreCase("ldcs")) {
+                    ldc = true;
+                    ldcStack = true;
+                    ldcBuffer = new StringBuilder();
+                    continue;
+                }
 
-            int opcode = Instructions.getOpcode(code);
+                int opcode = Instructions.getOpcode(code);
 
-            if (opcode == Instructions.INVALID)
-            {
-                System.out.println("Error compiling @ line " + i + ": Invalid opcode \"" + code + "\"");
+                if (opcode == Instructions.INVALID) {
+                    System.out.println("Error compiling @ line " + i + ": Invalid opcode \"" + code + "\"");
+                    System.exit(1);
+                }
+
+                ByteMeInstruction instruction = Instructions.getInstruction(opcode);
+
+                rawCode.add(opcode);
+
+                ignore += instruction.parameters();
+            } catch (Throwable throwable) {
+                System.out.println("ERROR ON BYTE " + i);
+                throwable.printStackTrace();
                 System.exit(1);
             }
-
-            ByteMeInstruction instruction = Instructions.getInstruction(opcode);
-
-            rawCode.add(opcode);
-
-            ignore += instruction.parameters();
         }
 
         int[] codeArray = new int[rawCode.size()];

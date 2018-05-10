@@ -49,7 +49,10 @@ public enum Instructions {
     STORES1(38, new StoreS1_38()),
     STORES2(39, new StoreS2_39()),
     STORES3(40, new StoreS3_40()),
-    STORES(41, new StoreS_41());
+    STORES(41, new StoreS_41()),
+    AND(42, new And_42()),
+    OR(43, new Or_43()),
+    XOR(44, new Xor_44());
 
     public static final int INVALID = -1;
 

@@ -1,0 +1,56 @@
+;======================================================
+
+const1 store0       ; 0-1
+const3 store1       ; 2-3
+const 5 store2      ; 4-6
+
+load0 load1 mod     ; 7-9   START
+const0 equal        ; 10-11
+store3              ; 12
+
+load0 load2 mod     ; 13-15
+const0 equal        ; 16-17
+store 5             ; 18-19
+
+load3 load 5 and    ; 20-23
+gotoif 73           ; 24-25 FIZZBUZZ
+
+load 5              ; 26-27
+gotoif 60           ; 28-29 BUZZ
+
+load3               ; 30
+gotoif 47           ; 31-32 FIZZ
+
+load0 print1        ; 33-34
+
+;NEXT
+load0               ; 35
+const 100           ; 36-37
+equal               ; 38
+gotoif 46           ; 39-40 EXIT
+load0               ; 41
+incr                ; 42
+store0              ; 43
+goto 7              ; 44-45 START
+
+;EXIT
+exit                ; 46
+
+;FIZZ
+ldcs "Fizz"         ; 47-56
+printas             ; 57
+goto 35             ; 58-59 NEXT
+
+;BUZZ
+ldcs "Buzz"         ; 60-69
+printas             ; 70
+goto 35             ; 71-72 NEXT
+
+;FIZZBUZZ
+ldcs "FizzBuzz"     ; 73-90
+printas             ; 91
+goto 35             ; 92-93 NEXT
+
+                    ; 94 Bytes
+
+;======================================================

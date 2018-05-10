@@ -1,10 +1,16 @@
-const2 const2
-sum
-store0
-load0
-print 1
+;======================================================
 
-load0
-const1
-sub
-print 1
+const2 const2   ; 0-1
+sum             ; 2
+store0          ; 3
+load0           ; 4
+print 1         ; 5-6
+
+load0           ; 7
+const1          ; 8
+sub             ; 9
+print 1         ; 10-11
+
+                ; 12 Bytes
+
+;======================================================
