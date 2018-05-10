@@ -14,7 +14,7 @@ public interface ByteMeRuntime {
 
     ByteMeInstruction currentInstruction();
 
-    byte next();
+    int next();
 
     ByteMeRegister register();
 

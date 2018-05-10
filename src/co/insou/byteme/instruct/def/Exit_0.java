@@ -11,7 +11,7 @@ public class Exit_0 implements ByteMeInstruction {
     public void execute(ByteMeRuntime runtime) {
         int size = runtime.stack().size();
 
-        byte[] stack = new byte[size];
+        int[] stack = new int[size];
 
         for (int index = 0; index < size; index++) {
             stack[index] = runtime.stack().pop();

@@ -7,7 +7,7 @@ public class GotoS_17 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        byte index = runtime.stack().pop();
+        int index = runtime.stack().pop();
         runtime.setPC(index);
     }
 

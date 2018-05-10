@@ -7,10 +7,10 @@ public class Mod_15 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        byte mod = runtime.stack().pop();
-        byte base = runtime.stack().pop();
+        int mod = runtime.stack().pop();
+        int base = runtime.stack().pop();
 
-        runtime.stack().push((byte) (base % mod));
+        runtime.stack().push(base % mod);
     }
 
 }

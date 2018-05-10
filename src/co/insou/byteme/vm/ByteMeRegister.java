@@ -2,10 +2,10 @@ package co.insou.byteme.vm;
 
 public interface ByteMeRegister {
 
-    byte len();
+    int len();
 
-    byte getData(int index);
+    int getData(int index);
 
-    void setData(int index, byte value);
+    void setData(int index, int value);
 
 }

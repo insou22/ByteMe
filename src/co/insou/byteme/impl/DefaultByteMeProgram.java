@@ -4,15 +4,15 @@ import co.insou.byteme.vm.ByteMeProgram;
 
 public class DefaultByteMeProgram implements ByteMeProgram {
 
-    private final byte[] code;
+    private final int[] code;
 
-    public DefaultByteMeProgram(byte[] code)
+    public DefaultByteMeProgram(int[] code)
     {
         this.code = code;
     }
 
     @Override
-    public byte[] code()
+    public int[] code()
     {
         return this.code;
     }

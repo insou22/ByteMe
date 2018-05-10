@@ -7,10 +7,10 @@ public class Div_14 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        byte div = runtime.stack().pop();
-        byte base = runtime.stack().pop();
+        int div = runtime.stack().pop();
+        int base = runtime.stack().pop();
 
-        runtime.stack().push((byte) (base / div));
+        runtime.stack().push(base / div);
     }
 
 }

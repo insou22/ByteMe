@@ -5,17 +5,17 @@ import co.insou.byteme.vm.ByteMeExecutionResultType;
 
 public class DefaultByteMeExecutionResult implements ByteMeExecutionResult {
 
-    private final byte[] data;
+    private final int[] data;
     private final ByteMeExecutionResultType result;
 
-    public DefaultByteMeExecutionResult(byte[] data, ByteMeExecutionResultType result)
+    public DefaultByteMeExecutionResult(int[] data, ByteMeExecutionResultType result)
     {
         this.data = data;
         this.result = result;
     }
 
     @Override
-    public byte[] data()
+    public int[] data()
     {
         return this.data;
     }

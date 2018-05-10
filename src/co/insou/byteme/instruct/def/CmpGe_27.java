@@ -7,10 +7,10 @@ public class CmpGe_27 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        byte lesser = runtime.stack().pop();
-        byte greater = runtime.stack().pop();
+        int lesser = runtime.stack().pop();
+        int greater = runtime.stack().pop();
 
-        runtime.stack().push((byte) ((greater >= lesser) ? 1 : 0));
+        runtime.stack().push((greater >= lesser) ? 1 : 0);
     }
 
 }

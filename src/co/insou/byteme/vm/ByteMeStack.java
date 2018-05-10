@@ -2,9 +2,9 @@ package co.insou.byteme.vm;
 
 public interface ByteMeStack {
 
-    byte pop();
+    int pop();
 
-    void push(byte value);
+    void push(int value);
 
     int size();
 

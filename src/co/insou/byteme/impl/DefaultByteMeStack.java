@@ -6,15 +6,15 @@ import java.util.Stack;
 
 public class DefaultByteMeStack implements ByteMeStack {
 
-    private final Stack<Byte> stack = new Stack<>();
+    private final Stack<Integer> stack = new Stack<>();
 
     @Override
-    public byte pop() {
+    public int pop() {
         return this.stack.pop();
     }
 
     @Override
-    public void push(byte value) {
+    public void push(int value) {
         this.stack.push(value);
     }
 

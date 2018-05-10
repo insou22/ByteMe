@@ -6,7 +6,7 @@ public interface ByteMeVM {
 
     ByteMeProgram compile(List<String> lines);
 
-    ByteMeProgram compile(byte[] code);
+    ByteMeProgram compile(int[] code);
 
     ByteMeExecutionResult execute(ByteMeProgram program);
 

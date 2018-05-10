@@ -9,11 +9,11 @@ public class Print_2b_18 implements ByteMe2BInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        byte amount = runtime.next();
+        int amount = runtime.next();
 
         StringJoiner joiner = new StringJoiner(", ");
 
-        for (byte b = 0; b < amount; b++) {
+        for (int i = 0; i < amount; i++) {
             joiner.add(String.valueOf(runtime.stack().pop()));
         }
 

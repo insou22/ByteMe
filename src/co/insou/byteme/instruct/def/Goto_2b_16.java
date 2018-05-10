@@ -7,7 +7,7 @@ public class Goto_2b_16 implements ByteMe2BInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        byte index = runtime.next();
+        int index = runtime.next();
         runtime.setPC(index);
     }
 

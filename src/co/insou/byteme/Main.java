@@ -10,14 +10,6 @@ import java.util.Arrays;
 
 public final class Main {
 
-    private static final String twoPlusTwoIsFourMinusOneThatsThree =
-            "STR 0,2;" +
-            "STR 1,2;" +
-            "ADD 0,1,2;" +
-            "STR 3,1;" +
-            "SUB 2,3,4;" +
-            "RET 5,0,1,2,3,4;";
-
     public static void main(String[] args) throws Exception
     {
         if (args.length == 0)

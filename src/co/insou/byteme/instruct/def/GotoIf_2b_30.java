@@ -8,7 +8,7 @@ public class GotoIf_2b_30 implements ByteMe2BInstruction {
     @Override
     public void execute(ByteMeRuntime runtime) {
         if (runtime.stack().pop() != 0) {
-            byte index = runtime.next();
+            int index = runtime.next();
             runtime.setPC(index);
         }
     }

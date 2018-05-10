@@ -54,8 +54,8 @@ public class DefaultByteMeRuntime implements ByteMeRuntime {
     }
 
     @Override
-    public byte next() {
-        byte next = this.program.code()[pc];
+    public int next() {
+        int next = this.program.code()[pc];
         this.totalCount++;
         this.pc++;
 
@@ -96,7 +96,7 @@ public class DefaultByteMeRuntime implements ByteMeRuntime {
     {
         while (this.pc < this.program.len() && this.running)
         {
-            byte opcode = this.next();
+            int opcode = this.next();
 
             ByteMeInstruction instruction = Instructions.getInstruction(opcode);
 
@@ -105,7 +105,7 @@ public class DefaultByteMeRuntime implements ByteMeRuntime {
 
         if (this.running)
         {
-            this.result = new DefaultByteMeExecutionResult(new byte[0], ByteMeExecutionResultType.SUCCESS_EOF);
+            this.result = new DefaultByteMeExecutionResult(new int[0], ByteMeExecutionResultType.SUCCESS_EOF);
         }
     }
 
@@ -117,7 +117,7 @@ public class DefaultByteMeRuntime implements ByteMeRuntime {
         catch (Throwable throwable)
         {
             throwable.printStackTrace();
-            this.result = new DefaultByteMeExecutionResult(new byte[0], ByteMeExecutionResultType.FAILED);
+            this.result = new DefaultByteMeExecutionResult(new int[0], ByteMeExecutionResultType.FAILED);
             this.exit();
         }
     }

@@ -7,10 +7,10 @@ public class Sub_12 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        byte sub = runtime.stack().pop();
-        byte base = runtime.stack().pop();
+        int sub = runtime.stack().pop();
+        int base = runtime.stack().pop();
 
-        runtime.stack().push((byte) (base - sub));
+        runtime.stack().push(base - sub);
     }
 
 }

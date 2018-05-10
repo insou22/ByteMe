@@ -7,7 +7,7 @@ public class Incr_24 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        runtime.stack().push((byte) (runtime.stack().pop() + 1));
+        runtime.stack().push(runtime.stack().pop() + 1);
     }
 
 }

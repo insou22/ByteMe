@@ -7,7 +7,7 @@ public class Const3_22 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        runtime.stack().push((byte) 3);
+        runtime.stack().push(3);
     }
 
 }

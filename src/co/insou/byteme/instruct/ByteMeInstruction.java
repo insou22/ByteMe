@@ -7,7 +7,7 @@ public interface ByteMeInstruction {
 
     void execute(ByteMeRuntime runtime);
 
-    default byte parameters() {
+    default int parameters() {
         return 0;
     }
 

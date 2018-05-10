@@ -7,7 +7,7 @@ public class Not_33 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        runtime.stack().push((byte) (runtime.stack().pop() == 0 ? 1 : 0));
+        runtime.stack().push(runtime.stack().pop() == 0 ? 1 : 0);
     }
 
 }

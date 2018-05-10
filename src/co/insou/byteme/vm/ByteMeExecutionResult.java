@@ -2,7 +2,7 @@ package co.insou.byteme.vm;
 
 public interface ByteMeExecutionResult {
 
-    byte[] data();
+    int[] data();
 
     ByteMeExecutionResultType resultType();
 

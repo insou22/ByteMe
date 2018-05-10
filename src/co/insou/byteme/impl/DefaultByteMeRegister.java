@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class DefaultByteMeRegister implements ByteMeRegister {
 
-    private final Map<Integer, Byte> register;
+    private final Map<Integer, Integer> register;
 
     public DefaultByteMeRegister()
     {
@@ -15,19 +15,19 @@ public class DefaultByteMeRegister implements ByteMeRegister {
     }
 
     @Override
-    public byte len()
+    public int len()
     {
-        return (byte) this.register.size();
+        return this.register.size();
     }
 
     @Override
-    public byte getData(int index)
+    public int getData(int index)
     {
         return this.register.get(index);
     }
 
     @Override
-    public void setData(int index, byte value)
+    public void setData(int index, int value)
     {
         this.register.put(index, value);
     }

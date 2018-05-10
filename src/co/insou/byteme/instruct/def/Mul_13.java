@@ -7,7 +7,7 @@ public class Mul_13 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        runtime.stack().push((byte) (runtime.stack().pop() * runtime.stack().pop()));
+        runtime.stack().push(runtime.stack().pop() * runtime.stack().pop());
     }
 
 }

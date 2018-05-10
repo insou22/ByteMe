@@ -7,7 +7,7 @@ public class Const0_19 implements ByteMeInstruction {
 
     @Override
     public void execute(ByteMeRuntime runtime) {
-        runtime.stack().push((byte) 0);
+        runtime.stack().push(0);
     }
 
 }

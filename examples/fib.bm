@@ -17,8 +17,11 @@ load3     ; 17
 incr      ; 18
 store3    ; 19 INCREMENT COUNTER
 load3     ; 20
-const 14  ; 21-22
+const 49  ; 21-22
 equal not ; 23-24 COUNTER == 14
 gotoif 6  ; 25-26 GOTO IF CONTINUING
 
           ; 27 Bytes
+
+ldc "Hello, World!"
+printa 13

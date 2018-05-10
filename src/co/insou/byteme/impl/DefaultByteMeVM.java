@@ -24,7 +24,7 @@ public class DefaultByteMeVM implements ByteMeVM {
     @Override
     public ByteMeProgram compile(List<String> program)
     {
-        List<Byte> bytes = new ArrayList<>();
+        List<Integer> rawCode = new ArrayList<>();
 
         StringJoiner joiner = new StringJoiner("\n");
 
@@ -51,6 +51,9 @@ public class DefaultByteMeVM implements ByteMeVM {
         String[] codes = joiner.toString().split("[\\n\\r\\s]+");
 
         int ignore = 0;
+        boolean ldc = false;
+        boolean ldcOpen = false;
+        StringBuilder ldcBuffer = null;
 
         for (int i = 0; i < codes.length; i++)
         {
@@ -60,13 +63,57 @@ public class DefaultByteMeVM implements ByteMeVM {
                 continue;
             }
 
+            if (ldc) {
+                if (ldcBuffer.length() > 0) {
+                    ldcBuffer.append(" ");
+                }
+                System.out.println("LDC loaded");
+                if (ldcOpen) {
+                    System.out.println("Open");
+                    if (this.fillLdc(code, ldcBuffer)) {
+                        System.out.println("Filled");
+                        this.completeLdc(ldcBuffer.toString(), rawCode);
+                        ldc = false;
+                        ldcOpen = false;
+                    }
+                } else {
+                    System.out.println("Closed");
+                    int c = 0;
+                    for (; c < code.length(); c++) {
+                        if ((code.charAt(c)) == '\"') {
+                            System.out.println("Now Open");
+                            ldcOpen = true;
+                            break;
+                        }
+                    }
+
+                    if (ldcOpen) {
+                        System.out.println("Attempting fill");
+                        if (this.fillLdc(code.substring(c + 1), ldcBuffer)) {
+                            System.out.println("Filled");
+                            this.completeLdc(ldcBuffer.toString(), rawCode);
+                            ldc = false;
+                            ldcOpen = false;
+                        }
+                    }
+                }
+                continue;
+            }
+
             if (ignore > 0) {
-                bytes.add(Byte.parseByte(code));
+                rawCode.add(Integer.parseInt(code));
                 ignore--;
                 continue;
             }
 
-            byte opcode = Instructions.getOpcode(code);
+            if (code.equalsIgnoreCase("ldc")) {
+                System.out.println("ldc");
+                ldc = true;
+                ldcBuffer = new StringBuilder();
+                continue;
+            }
+
+            int opcode = Instructions.getOpcode(code);
 
             if (opcode == Instructions.INVALID)
             {
@@ -76,26 +123,55 @@ public class DefaultByteMeVM implements ByteMeVM {
 
             ByteMeInstruction instruction = Instructions.getInstruction(opcode);
 
-            bytes.add(opcode);
+            rawCode.add(opcode);
 
             ignore += instruction.parameters();
         }
 
-        byte[] bytecode = new byte[bytes.size()];
+        int[] codeArray = new int[rawCode.size()];
 
-        for (int i = 0; i < bytes.size(); i++)
+        for (int i = 0; i < rawCode.size(); i++)
         {
-            bytecode[i] = bytes.get(i);
+            codeArray[i] = rawCode.get(i);
         }
 
-        System.out.println("Completed compilation - " + bytecode.length + " bytes:");
-        System.out.println(Arrays.toString(bytecode));
+        System.out.println("Completed compilation - size=" + codeArray.length + ":");
+        System.out.println(Arrays.toString(codeArray));
 
-        return this.compile(bytecode);
+        return this.compile(codeArray);
+    }
+
+    private boolean fillLdc(String code, StringBuilder builder) {
+        boolean literalNext = false;
+        for (char c : code.toCharArray()) {
+            if (literalNext) {
+                builder.append(c);
+                System.out.println("Appended literal " + c);
+                literalNext = false;
+                continue;
+            }
+            if (c == '\\') {
+                literalNext = true;
+                continue;
+            }
+            if (c == '\"') {
+                return true;
+            }
+            builder.append(c);
+            System.out.println("Appended natural " + c);
+        }
+        return false;
+    }
+
+    private void completeLdc(String lcd, List<Integer> code) {
+        for (int index = lcd.length() - 1; index >= 0; index--) {
+            code.add(Instructions.CONST.getOpcode());
+            code.add((int) lcd.charAt(index));
+        }
     }
 
     @Override
-    public ByteMeProgram compile(byte[] code)
+    public ByteMeProgram compile(int[] code)
     {
         return new DefaultByteMeProgram(code);
     }
