@@ -1,0 +1,23 @@
+;======================================================
+
+ldcs "2 + 2 is:"    ; 0-19
+printas             ; 20
+const2 const2       ; 21-22
+sum                 ; 23
+store0              ; 24
+load0               ; 25
+print 1             ; 26-27
+
+ldcs "minus 1 that's: " ; 28-61
+printas             ; 62
+load0               ; 63
+const1              ; 64
+sub                 ; 65
+print 1             ; 66-67
+
+ldcs "quick maffs"  ; 68-91
+printas             ; 92
+
+                    ; 93 Bytes
+
+;======================================================
