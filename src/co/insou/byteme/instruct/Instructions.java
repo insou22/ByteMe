@@ -43,7 +43,8 @@ public enum Instructions {
     EQUAL(32, new Equal_32()),
     NOT(33, new Not_33()),
     PRINTA(34, new PrintA_2b_34()),
-    PRINTAS(35, new PrintAS_35());
+    PRINTAS(35, new PrintAS_35()),
+    PRINT1(36, new Print1_36());
 
     public static final int INVALID = -1;
 
